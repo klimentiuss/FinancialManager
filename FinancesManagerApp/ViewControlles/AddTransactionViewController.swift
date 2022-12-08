@@ -16,6 +16,7 @@ class AddTransactionViewController: UIViewController {
     @IBOutlet weak var datePickerTF: UITextField!
     @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var yesterdayButton: UIButton!
+    @IBOutlet weak var noteTextView: UITextView!
     
     //MARK: - Private Properties
     //???? перенести
@@ -24,7 +25,7 @@ class AddTransactionViewController: UIViewController {
     private var selectedDate: String = ""
     private var selectedDay = ""
     private let datePicker = UIDatePicker()
-  var test = "1"
+    
     
     //MARK: - LifeCycles
     override func viewDidLoad() {
@@ -87,6 +88,7 @@ extension AddTransactionViewController {
         
         transaction.value = value
         transaction.type = selectedType
+        transaction.note = noteTextView.text
         
         if selectedDate == "" {
             selectedDay = "today"

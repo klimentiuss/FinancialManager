@@ -351,6 +351,7 @@
                     <navigationItem key="navigationItem" id="iDo-qE-kq5"/>
                     <connections>
                         <outlet property="datePickerTF" destination="eJc-gd-EHQ" id="LWA-yW-vsr"/>
+                        <outlet property="noteTextView" destination="LLm-n2-5QN" id="k7J-wz-8nc"/>
                         <outlet property="todayButton" destination="KvL-Ef-h1P" id="uwK-ee-sTk"/>
                         <outlet property="typeSegmentedControl" destination="M7j-NV-1ng" id="HD8-bb-Wdw"/>
                         <outlet property="valueTextField" destination="DEz-u6-BJU" id="07F-EG-gr8"/>

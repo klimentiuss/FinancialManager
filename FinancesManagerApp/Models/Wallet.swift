@@ -18,4 +18,5 @@ class Transaction: Object {
     @Persisted var value: Double = 0
     @Persisted var type = ""
     @Persisted var date = ""
+    @Persisted var note = "" 
 }
