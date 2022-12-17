@@ -19,16 +19,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QxK-JA-YJ2">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="392"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndP-PX-x3U">
-                                        <rect key="frame" x="20" y="56" width="244" height="38"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Wallet">
-                                            <fontDescription key="titleFontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
-                                            <color key="baseForegroundColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </buttonConfiguration>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jt3-kx-zDK">
-                                        <rect key="frame" x="20" y="170" width="374" height="83.5"/>
+                                        <rect key="frame" x="20" y="161.5" width="374" height="83.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="70"/>
                                         <color key="textColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -44,19 +36,27 @@
                                             <action selector="addWalletPressed" destination="IT1-8V-Q48" eventType="touchUpInside" id="6x6-Kg-VzM"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Wallet" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2nN-9j-6wO">
+                                        <rect key="frame" x="20" y="56" width="222" height="25.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="222" id="XfZ-7T-McL"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.92941176469999998" green="0.95686274510000002" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="ndP-PX-x3U" secondAttribute="trailing" constant="150" id="QOc-06-6Nu"/>
+                                    <constraint firstItem="jt3-kx-zDK" firstAttribute="top" secondItem="2nN-9j-6wO" secondAttribute="bottom" constant="80" id="9t9-dx-QyB"/>
+                                    <constraint firstItem="2nN-9j-6wO" firstAttribute="leading" secondItem="QxK-JA-YJ2" secondAttribute="leading" constant="20" symbolic="YES" id="KyO-dU-Xmf"/>
                                     <constraint firstAttribute="trailing" secondItem="jt3-kx-zDK" secondAttribute="trailing" constant="20" id="RR0-pw-SGD"/>
                                     <constraint firstAttribute="bottom" secondItem="oKd-Sy-lY3" secondAttribute="bottom" constant="20" id="T6b-cP-RwN"/>
                                     <constraint firstItem="jt3-kx-zDK" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QxK-JA-YJ2" secondAttribute="leading" constant="20" id="ZOs-GD-XDT"/>
-                                    <constraint firstItem="ndP-PX-x3U" firstAttribute="leading" secondItem="QxK-JA-YJ2" secondAttribute="leading" constant="20" symbolic="YES" id="ayG-v4-Clc"/>
                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="oKd-Sy-lY3" secondAttribute="trailing" constant="216" id="fJl-fI-tCG"/>
-                                    <constraint firstItem="ndP-PX-x3U" firstAttribute="top" secondItem="QxK-JA-YJ2" secondAttribute="top" constant="56" id="gAN-uS-DVu"/>
                                     <constraint firstItem="jt3-kx-zDK" firstAttribute="centerX" secondItem="QxK-JA-YJ2" secondAttribute="centerX" id="pvF-DN-tXs"/>
                                     <constraint firstItem="oKd-Sy-lY3" firstAttribute="leading" secondItem="QxK-JA-YJ2" secondAttribute="leading" constant="20" id="qmJ-6Z-WXZ"/>
-                                    <constraint firstItem="jt3-kx-zDK" firstAttribute="top" secondItem="ndP-PX-x3U" secondAttribute="bottom" constant="76" id="vE9-53-GFd"/>
+                                    <constraint firstItem="2nN-9j-6wO" firstAttribute="top" secondItem="QxK-JA-YJ2" secondAttribute="top" constant="56" id="wMd-Zd-1Jg"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -100,6 +100,10 @@
                             <constraint firstItem="QxK-JA-YJ2" firstAttribute="leading" secondItem="ch8-Fk-ngI" secondAttribute="leading" id="rCn-ED-5ms"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="valueLabel" destination="jt3-kx-zDK" id="Y2q-XA-6QV"/>
+                        <outlet property="walletTextField" destination="2nN-9j-6wO" id="qdO-dQ-xaS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PVJ-43-jSs" sceneMemberID="firstResponder"/>
             </objects>
@@ -127,7 +131,7 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="H3n-S0-xwt" secondAttribute="bottom" constant="36" id="G6x-Dn-IBI"/>
                                     <constraint firstAttribute="height" constant="143" id="dps-nh-mv4"/>
-                                    <constraint firstItem="H3n-S0-xwt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vFB-7m-rS1" secondAttribute="leading" constant="20" symbolic="YES" id="hBA-Re-zPc"/>
+                                    <constraint firstItem="H3n-S0-xwt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vFB-7m-rS1" secondAttribute="leading" constant="75" id="hBA-Re-zPc"/>
                                     <constraint firstItem="H3n-S0-xwt" firstAttribute="top" secondItem="vFB-7m-rS1" secondAttribute="top" constant="65" id="kOw-0A-kh9"/>
                                     <constraint firstAttribute="trailing" secondItem="H3n-S0-xwt" secondAttribute="trailing" constant="75" id="nUn-6R-iCX"/>
                                 </constraints>
@@ -140,22 +144,24 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="iaI-Wf-9gk">
                                 <rect key="frame" x="10" y="228" width="394" height="35.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WY3-k5-zQ4">
-                                        <rect key="frame" x="0.0" y="0.0" width="193.5" height="35.5"/>
-                                        <color key="backgroundColor" red="0.92941176469999998" green="0.95686274510000002" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Wallet">
-                                            <fontDescription key="titleFontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
-                                            <color key="baseForegroundColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </buttonConfiguration>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Wallet" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Su-gS-Pku">
+                                        <rect key="frame" x="0.0" y="0.0" width="193" height="35.5"/>
+                                        <color key="backgroundColor" red="0.91372549020000005" green="0.94509803920000002" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="193" id="eNf-Dd-rfL"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
-                                    </button>
+                                    </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSc-OR-WGU">
-                                        <rect key="frame" x="200.5" y="0.0" width="193.5" height="35.5"/>
+                                        <rect key="frame" x="200" y="0.0" width="194" height="35.5"/>
                                         <color key="backgroundColor" red="0.92941176469999998" green="0.95686274510000002" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Category">
@@ -355,6 +361,7 @@
                         <outlet property="todayButton" destination="KvL-Ef-h1P" id="uwK-ee-sTk"/>
                         <outlet property="typeSegmentedControl" destination="M7j-NV-1ng" id="HD8-bb-Wdw"/>
                         <outlet property="valueTextField" destination="DEz-u6-BJU" id="07F-EG-gr8"/>
+                        <outlet property="walletTestField" destination="5Su-gS-Pku" id="pyA-tp-nY1"/>
                         <outlet property="yesterdayButton" destination="SLn-3T-ia8" id="PYf-FO-efO"/>
                     </connections>
                 </viewController>

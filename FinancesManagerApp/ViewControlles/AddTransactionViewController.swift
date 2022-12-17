@@ -17,21 +17,28 @@ class AddTransactionViewController: UIViewController {
     @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var yesterdayButton: UIButton!
     @IBOutlet weak var noteTextView: UITextView!
+    @IBOutlet weak var walletTestField: UITextField!
     
     //MARK: - Private Properties
     //???? перенести
     var selectedType = "income"
     private var wallets: Results<Wallet>!
+    private var selectedWallet: Wallet?
     private var selectedDate: String = ""
     private var selectedDay = ""
     private let datePicker = UIDatePicker()
-    
+    private let pickerView = UIPickerView()
     
     //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
         wallets = StorageManager.shared.realm.objects(Wallet.self)
         createDatePicker()
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        walletTestField.inputView = pickerView
+        pickerView.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
     }
     
     //MARK: - IBActions
@@ -55,6 +62,9 @@ class AddTransactionViewController: UIViewController {
         changeColor()
     }
     
+ 
+    
+    
     
     @IBAction func saveButtonPressed() {
         saveTransaction()
@@ -71,7 +81,7 @@ extension AddTransactionViewController {
     
     //MARK: - Private Methods
     private func saveTransaction() {
-        guard let wallet = wallets.first else { return }
+        guard let wallet = selectedWallet else { return }
         guard let transaction = makeTransaction() else { return }
         
         DispatchQueue.main.async {
@@ -165,9 +175,34 @@ extension AddTransactionViewController {
     }
 }
 
+//MARK: - Work with PickerView
+extension AddTransactionViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return wallets.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let wallet = wallets[row]
+        selectedWallet = wallet
+        
+        return selectedWallet?.name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let wallet = wallets[row]
+        selectedWallet = wallet
+        walletTestField.text = selectedWallet?.name
+        walletTestField.resignFirstResponder()
+    }
+}
 
 extension Date {
     var yesterday: Date {
         return Calendar.current.date(byAdding: .day, value: -1, to: self)!
     }
 }
+

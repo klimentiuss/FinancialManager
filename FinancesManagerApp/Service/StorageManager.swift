@@ -15,6 +15,7 @@ class StorageManager {
     
     let realm = try! Realm()
     
+    
     func saveNewWallet(wallet: Wallet) {
         write {
             realm.add(wallet)
@@ -31,7 +32,6 @@ class StorageManager {
             wallet.transactions.append(transaction)
         }
     }
-    
   
 
     

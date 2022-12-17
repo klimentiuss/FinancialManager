@@ -5,15 +5,30 @@
 //  Created by Daniil Klimenko on 05.12.2022.
 //
 
-import UIKit
+import RealmSwift
 
 class MainViewController: UIViewController {
-
+    
+    
+    @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var walletTextField: UITextField!
+    
+    private var wallets: Results<Wallet>!
+    private let pickerView = UIPickerView()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         DataManager.shared.createMainWallet()
+        
+        wallets = StorageManager.shared.realm.objects(Wallet.self)
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        walletTextField.inputView = pickerView
+        pickerView.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
     }
-
+    
     
     @IBAction func addWalletPressed() {
         showAlert(title: "Add new Wallet")
@@ -22,6 +37,9 @@ class MainViewController: UIViewController {
     @IBAction func unwindForTransactionVC (_ sender: UIStoryboardSegue) {
         
     }
+    
+  
+    
 }
 
 extension MainViewController {
@@ -35,6 +53,7 @@ extension MainViewController {
     
     private func saveWallet(with name: String, and value: Double) {
         let newWallet = Wallet()
+        
         
         newWallet.name = name
         newWallet.money = value
@@ -70,4 +89,32 @@ extension UIAlertController {
             textField.placeholder = "Amount of money"
         }
     }
+    
+    
+}
+
+extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        wallets.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+         let wallet = wallets[row]
+        return wallet.name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let wallet = wallets[row]
+        walletTextField.text = wallet.name
+        valueLabel.text = "\(wallet.money)"
+        walletTextField.resignFirstResponder()
+        print(wallet.name)
+        print(wallet.money)
+        
+    }
+    
 }

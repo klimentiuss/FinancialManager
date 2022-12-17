@@ -12,7 +12,9 @@ class DataManager {
     static let shared = DataManager()
     
     private init() {}
-        
+    
+    
+    
     func createMainWallet() {
         
         if !UserDefaults.standard.bool(forKey: "done") {
@@ -22,12 +24,11 @@ class DataManager {
             mainWallet.name = "Main Wallet"
             mainWallet.money = 0
             
-            
             DispatchQueue.main.async {
                 StorageManager.shared.saveNewWallet(wallet: mainWallet)
             }
         }
-        
     }
+    
     
 }
