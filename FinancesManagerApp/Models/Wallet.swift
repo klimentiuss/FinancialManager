@@ -7,6 +7,14 @@
 
 import RealmSwift
 
+class Total: Object {
+    @Persisted(primaryKey: true) var id = 0
+    @Persisted var name = "Total"
+    @Persisted var value: Double = 0
+    
+    @Persisted var wallets: List<Wallet>
+}
+
 class Wallet: Object {
     @Persisted var name = ""
     @Persisted var money: Double = 0
@@ -18,5 +26,6 @@ class Transaction: Object {
     @Persisted var value: Double = 0
     @Persisted var type = ""
     @Persisted var date = ""
-    @Persisted var note = "" 
+    @Persisted var note = ""
 }
+

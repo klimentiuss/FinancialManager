@@ -15,10 +15,25 @@ class StorageManager {
     
     let realm = try! Realm()
     
+    func createTotal(total: Total) {
+        write {
+            realm.add(total)
+        }
+    }
     
-    func saveNewWallet(wallet: Wallet) {
+    func saveNewWallet(wallet: Wallet, total: Total) {
         write {
             realm.add(wallet)
+            total.wallets.append(wallet)
+        }
+    }
+    
+    func updateTotal(total: Total) {
+        write {
+            total.value = 0
+            for wallet in total.wallets {
+                total.value += wallet.money
+            }
         }
     }
 

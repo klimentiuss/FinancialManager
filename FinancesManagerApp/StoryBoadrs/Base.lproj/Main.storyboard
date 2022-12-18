@@ -84,7 +84,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="DVN-rX-mvs" kind="presentation" modalPresentationStyle="fullScreen" id="CB0-n0-LCk"/>
+                                    <segue destination="DVN-rX-mvs" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="CB0-n0-LCk"/>
                                 </connections>
                             </button>
                         </subviews>

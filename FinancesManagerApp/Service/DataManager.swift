@@ -13,19 +13,20 @@ class DataManager {
     
     private init() {}
     
-    
-    
-    func createMainWallet() {
+    func createDefaultObjects() {
         
         if !UserDefaults.standard.bool(forKey: "done") {
             UserDefaults.standard.set(true, forKey: "done")
             
-            let mainWallet = Wallet()
-            mainWallet.name = "Main Wallet"
-            mainWallet.money = 0
+            let initialWallet = Wallet()
+            initialWallet.name = "Main Wallet"
+            initialWallet.money = 0
+            
+            let total = Total()
             
             DispatchQueue.main.async {
-                StorageManager.shared.saveNewWallet(wallet: mainWallet)
+                StorageManager.shared.createTotal(total: total)
+                StorageManager.shared.saveNewWallet(wallet: initialWallet, total: total)
             }
         }
     }

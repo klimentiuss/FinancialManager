@@ -20,14 +20,15 @@ class AddTransactionViewController: UIViewController {
     @IBOutlet weak var walletTestField: UITextField!
     
     //MARK: - Private Properties
-    //???? перенести
-    var selectedType = "income"
+    private var selectedType = "income"
     private var wallets: Results<Wallet>!
     private var selectedWallet: Wallet?
-    private var selectedDate: String = ""
+    private var selectedDate = ""
     private var selectedDay = ""
     private let datePicker = UIDatePicker()
     private let pickerView = UIPickerView()
+    private var total: Total?
+
     
     //MARK: - LifeCycles
     override func viewDidLoad() {
@@ -35,14 +36,12 @@ class AddTransactionViewController: UIViewController {
         wallets = StorageManager.shared.realm.objects(Wallet.self)
         createDatePicker()
         
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        walletTestField.inputView = pickerView
-        pickerView.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+        DispatchQueue.main.async {
+            self.total = StorageManager.shared.realm.object(ofType: Total.self, forPrimaryKey: 0)
+        }
     }
     
     //MARK: - IBActions
-
     @IBAction func segmentedControllPressed() {
         switch typeSegmentedControl.selectedSegmentIndex {
         case 0: selectedType = "income"
@@ -62,38 +61,32 @@ class AddTransactionViewController: UIViewController {
         changeColor()
     }
     
- 
-    
-    
-    
     @IBAction func saveButtonPressed() {
         saveTransaction()
     }
     
     @IBAction func cancelButtonPressed() {
     }
-    
 }
 
 
 extension AddTransactionViewController {
-    
-    
     //MARK: - Private Methods
     private func saveTransaction() {
         guard let wallet = selectedWallet else { return }
         guard let transaction = makeTransaction() else { return }
         
+        guard let newTotal = total else { return }
+        
         DispatchQueue.main.async {
             StorageManager.shared.addTransaction(wallet: wallet, transaction: transaction)
-            print("ok")
+            StorageManager.shared.updateTotal(total: newTotal)
         }
     }
     
     private func makeTransaction() -> Transaction? {
         
         let transaction = Transaction()
-        
         let value = Double(valueTextField.text ?? "0") ?? 0
         
         transaction.value = value
@@ -106,7 +99,6 @@ extension AddTransactionViewController {
         } else {
             transaction.date = selectedDate
         }
-       
         
         return transaction
     }
@@ -130,9 +122,13 @@ extension AddTransactionViewController {
         
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-                
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
         toolbar.setItems([doneButton], animated: true)
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        pickerView.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+        walletTestField.inputView = pickerView
         
         datePickerTF.inputAccessoryView = toolbar
         datePickerTF.inputView = datePicker
@@ -170,12 +166,11 @@ extension AddTransactionViewController {
             datePickerTF.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         default:
             return
-    
         }
     }
 }
 
-//MARK: - Work with PickerView
+    //MARK: - Work with PickerView
 extension AddTransactionViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
