@@ -8,7 +8,7 @@
 import RealmSwift
 
 class AddTransactionViewController: UIViewController {
-
+    
     
     //MARK: - IBOutlets
     @IBOutlet weak var valueTextField: UITextField!
@@ -28,17 +28,22 @@ class AddTransactionViewController: UIViewController {
     private let datePicker = UIDatePicker()
     private let pickerView = UIPickerView()
     private var total: Total?
-
+    
     
     //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
         wallets = StorageManager.shared.realm.objects(Wallet.self)
+        createWalletPicker()
         createDatePicker()
         
         DispatchQueue.main.async {
             self.total = StorageManager.shared.realm.object(ofType: Total.self, forPrimaryKey: 0)
         }
+        
+        valueTextField.inputAccessoryView = createToolbar(action: "cancel", title: "Enter value")
+        noteTextView.inputAccessoryView = createToolbar(action: "done", title: "Enter note")
+        valueTextField.delegate = self
     }
     
     //MARK: - IBActions
@@ -108,7 +113,7 @@ extension AddTransactionViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yy"
         var dateYouNeed = ""
-                
+        
         if selectedDay == "today" {
             dateYouNeed = dateFormatter.string(from: date)
         } else {
@@ -118,24 +123,53 @@ extension AddTransactionViewController {
         return dateYouNeed
     }
     
-    private func createDatePicker() {
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
-        toolbar.setItems([doneButton], animated: true)
-        
+    private func createWalletPicker() {
         pickerView.delegate = self
         pickerView.dataSource = self
-        pickerView.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
-        walletTestField.inputView = pickerView
+        pickerView.backgroundColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
         
-        datePickerTF.inputAccessoryView = toolbar
+        walletTestField.inputView = pickerView
+        walletTestField.inputAccessoryView = createToolbar(action: "cancel", title: "Choose Wallet")
+    }
+    
+    private func createDatePicker() {
+        datePickerTF.inputAccessoryView = createToolbar(action: "date", title: "Choose Date")
         datePickerTF.inputView = datePicker
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
     }
+    
+    func createToolbar(action: String, title: String) -> UIToolbar {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        var actionButton = UIBarButtonItem()
 
+        switch action {
+        case "done":
+            actionButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(cancelPressed))
+            actionButton.tintColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        case "date":
+            actionButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
+            actionButton.tintColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        default:
+            actionButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(cancelPressed))
+            actionButton.tintColor = .red
+        }
+        
+        let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
+        label.text = title
+        label.center = CGPoint(x: CGRectGetMidX(view.frame), y: view.frame.height)
+        let toolbarTitle = UIBarButtonItem(customView: label)
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([toolbarTitle, flexible, actionButton], animated: true)
+        
+        return toolbar
+    }
+    @objc private func cancelPressed() {
+        self.view.endEditing(true)
+    }
+    
     @objc private func donePressed() {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -150,7 +184,7 @@ extension AddTransactionViewController {
     }
     
     func changeColor() {
-
+        
         switch selectedDay {
         case "today":
             todayButton.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
@@ -170,7 +204,7 @@ extension AddTransactionViewController {
     }
 }
 
-    //MARK: - Work with PickerView
+//MARK: - Work with PickerView
 extension AddTransactionViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -201,3 +235,12 @@ extension Date {
     }
 }
 
+
+//MARK: - Work with TextField
+
+extension AddTransactionViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+}

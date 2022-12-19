@@ -50,6 +50,7 @@ class MainViewController: UIViewController {
 extension MainViewController {
     private func showAlert(title: String) {
         let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        alert.overrideUserInterfaceStyle = UIUserInterfaceStyle.dark
         alert.makeWallet { name, value in
             self.saveWallet(with: name, and: value)
             self.valueLabel.text = String(Int(value))
@@ -98,24 +99,42 @@ extension UIAlertController {
             textField.placeholder = "Amount of money"
         }
     }
+
 }
 
     //MARK: - Work with PickerView
 extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     private func createPickerView() {
         
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
-        toolBar.sizeToFit()
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(cancelPressed))
+        cancelButton.tintColor = .red
+        
+        let toolbarTitle = createToolbarText(title: "Choose Wallet")
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbar.setItems([toolbarTitle, flexible, cancelButton], animated: true)
         
         pickerView.delegate = self
         pickerView.dataSource = self
         walletTextField.inputView = pickerView
-        walletTextField.inputAccessoryView = toolBar
-        pickerView.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+        walletTextField.inputAccessoryView = toolbar
+        pickerView.backgroundColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
     }
+    
+    private func createToolbarText(title: String) -> UIBarButtonItem {
+        let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
+        label.text = title
+        label.center = CGPoint(x: CGRectGetMidX(view.frame), y: view.frame.height)
+        let toolbarTitle = UIBarButtonItem(customView: label)
+        return toolbarTitle
+    }
+    
+    @objc private func cancelPressed() {
+        self.view.endEditing(true)
+    }
+    
     
     private func updateWallets() {
         let walletfromTotal = Wallet()
