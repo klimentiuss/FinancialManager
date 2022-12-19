@@ -19,6 +19,11 @@ class MainViewController: UIViewController {
     private var total: Total?
     
     //MARK: - LifeCycles
+    override func viewWillAppear(_ animated: Bool) {
+       updateWallets()
+       updateView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         DataManager.shared.createDefaultObjects()
@@ -27,6 +32,7 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async {
             self.total = StorageManager.shared.realm.object(ofType: Total.self, forPrimaryKey: 0)
             self.updateWallets()
+            self.updateView()
         }
     }
     
@@ -46,7 +52,7 @@ extension MainViewController {
         let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
         alert.makeWallet { name, value in
             self.saveWallet(with: name, and: value)
-            self.valueLabel.text = String(value)
+            self.valueLabel.text = String(Int(value))
             self.walletTextField.text = name
         }
         present(alert, animated: true)
@@ -65,8 +71,6 @@ extension MainViewController {
             self.updateWallets()
         }
     }
-    
-    
 }
 
     //MARK: - Work with UIAlertController
@@ -127,6 +131,12 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         wallets.insert(walletfromTotal, at: 0)
     }
     
+    func updateView() {
+        let total = wallets.first
+        valueLabel.text = "\(Int(total?.money ?? 0))"
+        walletTextField.text = total?.name
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
@@ -143,9 +153,7 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let wallet = wallets[row]
         walletTextField.text = wallet.name
-        valueLabel.text = "\(wallet.money)"
+        valueLabel.text = "\(Int(wallet.money))"
         walletTextField.resignFirstResponder()
-        print(wallet.name)
-        print(wallet.money)
     }
 }

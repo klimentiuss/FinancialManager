@@ -43,7 +43,7 @@
                                         </constraints>
                                         <color key="textColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="nickname"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.92941176469999998" green="0.95686274510000002" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -269,6 +269,7 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="saveButtonPressed" destination="DVN-rX-mvs" eventType="touchUpInside" id="jCn-jY-z9k"/>
+                                            <segue destination="1OE-QS-8P3" kind="unwind" unwindAction="unwindForTransactionVC:" id="nlh-e2-WqT"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K94-0c-QbP">
