@@ -18,6 +18,7 @@
 		DCBA9DA5293E434E009E2645 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA4293E434E009E2645 /* Wallet.swift */; };
 		DCBA9DA7293E435B009E2645 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA6293E435B009E2645 /* DataManager.swift */; };
 		DCBA9DA9293E4364009E2645 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA8293E4364009E2645 /* StorageManager.swift */; };
+		DCE18404295335BC00FF6FA7 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		DCBA9DA4293E434E009E2645 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		DCBA9DA6293E435B009E2645 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		DCBA9DA8293E4364009E2645 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 			children = (
 				DC348FD3293E3B1200636F8C /* MainViewController.swift */,
 				DC348FE3293E3CC300636F8C /* AddTransactionViewController.swift */,
+				DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */,
 			);
 			path = ViewControlles;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				DC348FD4293E3B1200636F8C /* MainViewController.swift in Sources */,
 				DCBA9DA9293E4364009E2645 /* StorageManager.swift in Sources */,
 				DC348FD0293E3B1200636F8C /* AppDelegate.swift in Sources */,
+				DCE18404295335BC00FF6FA7 /* CalculatorViewController.swift in Sources */,
 				DC348FD2293E3B1200636F8C /* SceneDelegate.swift in Sources */,
 				DC348FE4293E3CC300636F8C /* AddTransactionViewController.swift in Sources */,
 			);

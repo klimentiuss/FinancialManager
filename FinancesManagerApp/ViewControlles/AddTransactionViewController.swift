@@ -9,7 +9,6 @@ import RealmSwift
 
 class AddTransactionViewController: UIViewController {
     
-    
     //MARK: - IBOutlets
     @IBOutlet weak var valueTextField: UITextField!
     @IBOutlet weak var typeSegmentedControl: UISegmentedControl!
@@ -44,6 +43,13 @@ class AddTransactionViewController: UIViewController {
         valueTextField.inputAccessoryView = createToolbar(action: "cancel", title: "Enter value")
         noteTextView.inputAccessoryView = createToolbar(action: "done", title: "Enter note")
         valueTextField.delegate = self
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "calculatorSegue" {
+            let destinationVC = segue.destination as! CalculatorViewController
+            destinationVC.delegate = self
+        }
     }
     
     //MARK: - IBActions
@@ -201,6 +207,13 @@ extension AddTransactionViewController {
         default:
             return
         }
+    }
+}
+
+//MARK: - Work with delegation
+extension AddTransactionViewController: CalculatorViewControllerDelegate {
+    func fillValueTF(value: String) {
+        valueTextField.text = value
     }
 }
 
