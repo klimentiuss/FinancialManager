@@ -27,5 +27,11 @@ class Transaction: Object {
     @Persisted var type = ""
     @Persisted var date = ""
     @Persisted var note = ""
+    @Persisted var category: Category?
 }
+
+class Category: Object {
+    @Persisted var name = ""
+}
+
 

@@ -48,7 +48,17 @@ class StorageManager {
         }
     }
   
-
+    func makeDefaultCategories(categories: [Category]) {
+        write {
+            realm.add(categories)
+        }
+    }
+    
+    func saveNewCategory(category: Category) {
+        write {
+            realm.add(category)
+        }
+    }
     
     private func write(_ completion: () -> Void) {
         do {

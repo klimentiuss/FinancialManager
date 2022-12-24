@@ -17,6 +17,7 @@ class AddTransactionViewController: UIViewController {
     @IBOutlet weak var yesterdayButton: UIButton!
     @IBOutlet weak var noteTextView: UITextView!
     @IBOutlet weak var walletTestField: UITextField!
+    @IBOutlet weak var categoryButton: UIButton!
     
     //MARK: - Private Properties
     private var selectedType = "income"
@@ -27,6 +28,7 @@ class AddTransactionViewController: UIViewController {
     private let datePicker = UIDatePicker()
     private let pickerView = UIPickerView()
     private var total: Total?
+    var selectedCategory: Category?
     
     
     //MARK: - LifeCycles
@@ -35,7 +37,7 @@ class AddTransactionViewController: UIViewController {
         wallets = StorageManager.shared.realm.objects(Wallet.self)
         createWalletPicker()
         createDatePicker()
-        
+                
         DispatchQueue.main.async {
             self.total = StorageManager.shared.realm.object(ofType: Total.self, forPrimaryKey: 0)
         }
@@ -50,26 +52,35 @@ class AddTransactionViewController: UIViewController {
             let destinationVC = segue.destination as! CalculatorViewController
             destinationVC.delegate = self
         }
+        
+        if segue.identifier == "categorySegue" {
+            let destinationVC = segue.destination as! CategoriesTableViewController
+            destinationVC.delegate = self
+        }
     }
     
     //MARK: - IBActions
     @IBAction func segmentedControllPressed() {
         switch typeSegmentedControl.selectedSegmentIndex {
-        case 0: selectedType = "income"
-        default: selectedType = "expence"
+        case 0:
+            selectedType = "income"
+            changeSegmentedTextColor(selected: typeSegmentedControl)
+        default:
+            selectedType = "expence"
+            changeSegmentedTextColor(selected: typeSegmentedControl)
         }
     }
     
     @IBAction func todayPressed() {
         selectedDay = "today"
         selectedDate = getDate()
-        changeColor()
+        switchColor()
     }
     
     @IBAction func yesterdayPressed() {
         selectedDay = "yesterday"
         selectedDate = getDate()
-        changeColor()
+        switchColor()
     }
     
     @IBAction func saveButtonPressed() {
@@ -103,6 +114,7 @@ extension AddTransactionViewController {
         transaction.value = value
         transaction.type = selectedType
         transaction.note = noteTextView.text
+        transaction.category = selectedCategory
         
         if selectedDate == "" {
             selectedDay = "today"
@@ -145,11 +157,11 @@ extension AddTransactionViewController {
         datePicker.preferredDatePickerStyle = .wheels
     }
     
-    func createToolbar(action: String, title: String) -> UIToolbar {
+    private func createToolbar(action: String, title: String) -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         var actionButton = UIBarButtonItem()
-
+        
         switch action {
         case "done":
             actionButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(cancelPressed))
@@ -185,36 +197,77 @@ extension AddTransactionViewController {
         datePickerTF.text = formatter.string(from: datePicker.date)
         selectedDate = datePickerTF.text ?? "0"
         selectedDay = "otherDay"
-        changeColor()
+        switchColor()
         self.view.endEditing(true)
     }
     
-    func changeColor() {
+    private func switchColor() {
         
         switch selectedDay {
         case "today":
             todayButton.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            todayButton.configuration?.titleTextAttributesTransformer = changeColor(color: "white")
             yesterdayButton.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+            yesterdayButton.configuration?.titleTextAttributesTransformer = changeColor(color: "green")
             datePickerTF.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+            datePickerTF.textColor = #colorLiteral(red: 0.1921568627, green: 0.2784313725, blue: 0.2274509804, alpha: 1)
         case "yesterday":
             todayButton.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+            todayButton.configuration?.titleTextAttributesTransformer = changeColor(color: "green")
             yesterdayButton.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            yesterdayButton.configuration?.titleTextAttributesTransformer = changeColor(color: "white")
             datePickerTF.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+            datePickerTF.textColor = #colorLiteral(red: 0.1921568627, green: 0.2784313725, blue: 0.2274509804, alpha: 1)
         case "otherDay":
             todayButton.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+            todayButton.configuration?.titleTextAttributesTransformer = changeColor(color: "green")
             yesterdayButton.backgroundColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
+            yesterdayButton.configuration?.titleTextAttributesTransformer = changeColor(color: "green")
             datePickerTF.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            datePickerTF.textColor = #colorLiteral(red: 0.9294117647, green: 0.9568627451, blue: 0.9490196078, alpha: 1)
         default:
             return
         }
     }
+    
+    private func changeColor(color: String) -> UIConfigurationTextAttributesTransformer {
+        if color == "white" {
+            return  UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.foregroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                return outgoing }
+        } else {
+            return  UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.foregroundColor = #colorLiteral(red: 0.1921568627, green: 0.2784313725, blue: 0.2274509804, alpha: 1)
+                return outgoing }
+        }
+        
+    }
+    
+    private func changeSegmentedTextColor(selected: UISegmentedControl) {
+        selected.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: UIControl.State.selected)
+    }
 }
 
 //MARK: - Work with delegation
-extension AddTransactionViewController: CalculatorViewControllerDelegate {
+extension AddTransactionViewController: CalculatorViewControllerDelegate, CategoriesVCDelegate {
+    func getCategory(category: Category) {
+        selectedCategory = category
+        categoryButton.setTitle(selectedCategory?.name, for: .normal)
+        categoryButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+            outgoing.foregroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            return outgoing
+        }
+        categoryButton.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+    }
+    
     func fillValueTF(value: String) {
         valueTextField.text = value
     }
+    
 }
 
 //MARK: - Work with PickerView
@@ -238,6 +291,8 @@ extension AddTransactionViewController: UIPickerViewDelegate, UIPickerViewDataSo
         let wallet = wallets[row]
         selectedWallet = wallet
         walletTestField.text = selectedWallet?.name
+        walletTestField.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        walletTestField.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         walletTestField.resignFirstResponder()
     }
 }

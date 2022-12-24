@@ -15,10 +15,12 @@
 		DC348FD9293E3B1200636F8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC348FD8293E3B1200636F8C /* Assets.xcassets */; };
 		DC348FDC293E3B1200636F8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC348FDA293E3B1200636F8C /* LaunchScreen.storyboard */; };
 		DC348FE4293E3CC300636F8C /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC348FE3293E3CC300636F8C /* AddTransactionViewController.swift */; };
-		DCBA9DA5293E434E009E2645 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA4293E434E009E2645 /* Wallet.swift */; };
+		DCB64FBA295735DD00428D25 /* Extention + AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB64FB9295735DD00428D25 /* Extention + AlertController.swift */; };
+		DCBA9DA5293E434E009E2645 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA4293E434E009E2645 /* Model.swift */; };
 		DCBA9DA7293E435B009E2645 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA6293E435B009E2645 /* DataManager.swift */; };
 		DCBA9DA9293E4364009E2645 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA8293E4364009E2645 /* StorageManager.swift */; };
 		DCE18404295335BC00FF6FA7 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */; };
+		DCFFB87029572F900072B605 /* CategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFFB86F29572F900072B605 /* CategoriesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +36,12 @@
 		DC348FDB293E3B1200636F8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC348FDD293E3B1200636F8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC348FE3293E3CC300636F8C /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
-		DCBA9DA4293E434E009E2645 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		DCB64FB9295735DD00428D25 /* Extention + AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention + AlertController.swift"; sourceTree = "<group>"; };
+		DCBA9DA4293E434E009E2645 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		DCBA9DA6293E435B009E2645 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		DCBA9DA8293E4364009E2645 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
+		DCFFB86F29572F900072B605 /* CategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 				DC348FD3293E3B1200636F8C /* MainViewController.swift */,
 				DC348FE3293E3CC300636F8C /* AddTransactionViewController.swift */,
 				DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */,
+				DCFFB86F29572F900072B605 /* CategoriesTableViewController.swift */,
+				DCB64FB9295735DD00428D25 /* Extention + AlertController.swift */,
 			);
 			path = ViewControlles;
 			sourceTree = "<group>";
@@ -140,7 +146,7 @@
 		DCBA9DA3293E433D009E2645 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DCBA9DA4293E434E009E2645 /* Wallet.swift */,
+				DCBA9DA4293E434E009E2645 /* Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -269,12 +275,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCBA9DA5293E434E009E2645 /* Wallet.swift in Sources */,
+				DCBA9DA5293E434E009E2645 /* Model.swift in Sources */,
 				DCBA9DA7293E435B009E2645 /* DataManager.swift in Sources */,
 				DC348FD4293E3B1200636F8C /* MainViewController.swift in Sources */,
 				DCBA9DA9293E4364009E2645 /* StorageManager.swift in Sources */,
 				DC348FD0293E3B1200636F8C /* AppDelegate.swift in Sources */,
 				DCE18404295335BC00FF6FA7 /* CalculatorViewController.swift in Sources */,
+				DCFFB87029572F900072B605 /* CategoriesTableViewController.swift in Sources */,
+				DCB64FBA295735DD00428D25 /* Extention + AlertController.swift in Sources */,
 				DC348FD2293E3B1200636F8C /* SceneDelegate.swift in Sources */,
 				DC348FE4293E3CC300636F8C /* AddTransactionViewController.swift in Sources */,
 			);

@@ -23,13 +23,28 @@ class DataManager {
             initialWallet.money = 0
             
             let total = Total()
+            let categories: [Category] = defaultCategories()
             
             DispatchQueue.main.async {
                 StorageManager.shared.createTotal(total: total)
                 StorageManager.shared.saveNewWallet(wallet: initialWallet, total: total)
+                StorageManager.shared.makeDefaultCategories(categories: categories)
             }
         }
     }
     
+    func defaultCategories() -> [Category] {
+        let categoryNames = ["Food", "Travel", "Medicine"]
+        var categories: [Category] = []
+        
+        for name in categoryNames {
+            let category = Category()
+            category.name = name
+            
+            categories.append(category)
+        }
+        
+        return categories
+    }
     
 }

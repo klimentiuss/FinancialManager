@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         DataManager.shared.createDefaultObjects()
-        createPickerView()        
+        createPickerView()
         
         DispatchQueue.main.async {
             self.total = StorageManager.shared.realm.object(ofType: Total.self, forPrimaryKey: 0)
@@ -72,34 +72,6 @@ extension MainViewController {
             self.updateWallets()
         }
     }
-}
-
-    //MARK: - Work with UIAlertController
-extension UIAlertController {
-    func makeWallet(completion: @escaping (String, Double) -> Void) {
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            guard let name = self.textFields?.first?.text else { return}
-            guard !name.isEmpty else { return }
-            
-            guard let textValue = self.textFields?.last?.text else { return }
-            guard let value = Double(textValue) else { return }
-            
-            completion(name, value)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
-        
-        addAction(saveAction)
-        addAction(cancelAction)
-        
-        addTextField { textField in
-            textField.placeholder = "Wallet name"
-        }
-        addTextField { textField in
-            textField.placeholder = "Amount of money"
-        }
-    }
-
 }
 
     //MARK: - Work with PickerView

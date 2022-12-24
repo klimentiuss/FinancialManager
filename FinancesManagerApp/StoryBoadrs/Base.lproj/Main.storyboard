@@ -173,6 +173,9 @@
                                                 <integer key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="5xK-KU-IpZ" kind="show" identifier="categorySegue" id="YJo-3n-Z1k"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -295,7 +298,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Note" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LLm-n2-5QN">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LLm-n2-5QN">
                                 <rect key="frame" x="10" y="309" width="394" height="128"/>
                                 <color key="backgroundColor" red="0.92941176469999998" green="0.95686274510000002" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -360,6 +363,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="iDo-qE-kq5"/>
                     <connections>
+                        <outlet property="categoryButton" destination="ZSc-OR-WGU" id="tpC-FC-4oP"/>
                         <outlet property="datePickerTF" destination="eJc-gd-EHQ" id="LWA-yW-vsr"/>
                         <outlet property="noteTextView" destination="LLm-n2-5QN" id="k7J-wz-8nc"/>
                         <outlet property="todayButton" destination="KvL-Ef-h1P" id="uwK-ee-sTk"/>
@@ -373,6 +377,42 @@
                 <exit id="1OE-QS-8P3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1713.0434782608697" y="2.6785714285714284"/>
+        </scene>
+        <!--Categories-->
+        <scene sceneID="Pfq-2f-IRQ">
+            <objects>
+                <tableViewController id="5xK-KU-IpZ" customClass="CategoriesTableViewController" customModule="FinancesManagerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="reZ-f5-BbT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.19215686274509802" green="0.27843137254901962" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="categoryCell" id="g8Q-sz-cOt">
+                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="g8Q-sz-cOt" id="oa4-DW-g2P">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5xK-KU-IpZ" id="cDg-JA-bKV"/>
+                            <outlet property="delegate" destination="5xK-KU-IpZ" id="XFJ-gW-Qih"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Categories" id="WCU-B1-emX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ytg-lA-QRh">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="5xK-KU-IpZ" id="5Pg-9R-UiD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w3w-nu-zjD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2490" y="-260"/>
         </scene>
         <!--Calculator-->
         <scene sceneID="o5K-P9-DC2">
@@ -671,7 +711,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lpf-CO-uZf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2583" y="3"/>
+            <point key="canvasLocation" x="2490" y="419"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tRD-Rh-JLy">
