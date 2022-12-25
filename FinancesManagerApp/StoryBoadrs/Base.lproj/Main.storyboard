@@ -64,6 +64,73 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xkm-Ed-dvS">
+                                <rect key="frame" x="0.0" y="402" width="414" height="494"/>
+                                <color key="backgroundColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="50" id="bHm-Gc-vGr" customClass="TransactionTableViewCell" customModule="FinancesManagerApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bHm-Gc-vGr" id="z6Z-6c-7Fc">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Travel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Rqy-CL-nF0">
+                                                    <rect key="frame" x="20" y="11" width="130" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="cLE-Cn-D4A"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.19215686269999999" green="0.2784313725" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVo-pY-aGc">
+                                                    <rect key="frame" x="251" y="15" width="150" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="nyr-5L-Y0s"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.56078431370000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Wallet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="fmh-Cn-gDB">
+                                                    <rect key="frame" x="20" y="30" width="130" height="12"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="diq-PV-qn4"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="fmh-Cn-gDB" secondAttribute="bottom" constant="8" id="Bl3-ij-faJ"/>
+                                                <constraint firstItem="oVo-pY-aGc" firstAttribute="top" secondItem="z6Z-6c-7Fc" secondAttribute="top" constant="15" id="DPo-II-N6t"/>
+                                                <constraint firstItem="oVo-pY-aGc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Rqy-CL-nF0" secondAttribute="trailing" constant="8" symbolic="YES" id="E3v-W5-hyr"/>
+                                                <constraint firstItem="oVo-pY-aGc" firstAttribute="leading" secondItem="fmh-Cn-gDB" secondAttribute="trailing" constant="101" id="HPE-so-Mpv"/>
+                                                <constraint firstAttribute="trailing" secondItem="oVo-pY-aGc" secondAttribute="trailing" constant="13" id="Ohc-2H-plY"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Rqy-CL-nF0" secondAttribute="bottom" constant="7" id="RCC-o9-dTX"/>
+                                                <constraint firstAttribute="bottom" secondItem="oVo-pY-aGc" secondAttribute="bottom" constant="14" id="lnJ-ox-34l"/>
+                                                <constraint firstItem="Rqy-CL-nF0" firstAttribute="top" secondItem="z6Z-6c-7Fc" secondAttribute="topMargin" id="mRa-k4-GeT"/>
+                                                <constraint firstItem="fmh-Cn-gDB" firstAttribute="top" secondItem="z6Z-6c-7Fc" secondAttribute="top" constant="30" id="qkr-lY-Ybz"/>
+                                                <constraint firstItem="Rqy-CL-nF0" firstAttribute="leading" secondItem="z6Z-6c-7Fc" secondAttribute="leadingMargin" id="tt4-xR-AXR"/>
+                                                <constraint firstItem="fmh-Cn-gDB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z6Z-6c-7Fc" secondAttribute="leading" symbolic="YES" id="zLg-aG-h9g"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.92941176469999998" green="0.95686274510000002" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="categoryLabel" destination="Rqy-CL-nF0" id="bkb-ik-CN3"/>
+                                            <outlet property="valueLabel" destination="oVo-pY-aGc" id="ziK-CP-nV1"/>
+                                            <outlet property="walletLabel" destination="fmh-Cn-gDB" id="ymQ-QN-QBY"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tES-sk-EVp">
                                 <rect key="frame" x="334" y="816" width="60" height="60"/>
                                 <color key="backgroundColor" red="0.92941176469999998" green="0.95686274510000002" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -93,7 +160,11 @@
                         <constraints>
                             <constraint firstItem="ch8-Fk-ngI" firstAttribute="trailing" secondItem="tES-sk-EVp" secondAttribute="trailing" constant="20" id="4e0-Jm-CKB"/>
                             <constraint firstItem="QxK-JA-YJ2" firstAttribute="top" secondItem="tPy-yP-yT4" secondAttribute="top" id="Giw-iV-gKD"/>
+                            <constraint firstAttribute="bottom" secondItem="xkm-Ed-dvS" secondAttribute="bottom" id="IOq-Uh-c6f"/>
+                            <constraint firstItem="xkm-Ed-dvS" firstAttribute="top" secondItem="QxK-JA-YJ2" secondAttribute="bottom" constant="10" id="Lia-Ec-izL"/>
+                            <constraint firstItem="xkm-Ed-dvS" firstAttribute="trailing" secondItem="ch8-Fk-ngI" secondAttribute="trailing" id="Nyt-Qf-29T"/>
                             <constraint firstItem="QxK-JA-YJ2" firstAttribute="height" secondItem="tPy-yP-yT4" secondAttribute="height" multiplier="0.4375" id="S31-UG-c2k"/>
+                            <constraint firstItem="xkm-Ed-dvS" firstAttribute="leading" secondItem="ch8-Fk-ngI" secondAttribute="leading" id="bG2-ia-oZm"/>
                             <constraint firstAttribute="bottom" secondItem="tES-sk-EVp" secondAttribute="bottom" constant="20" id="e74-4g-GMq"/>
                             <constraint firstItem="QxK-JA-YJ2" firstAttribute="trailing" secondItem="ch8-Fk-ngI" secondAttribute="trailing" id="loG-Sy-aFf"/>
                             <constraint firstItem="tES-sk-EVp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ch8-Fk-ngI" secondAttribute="leading" symbolic="YES" id="pEB-Ld-t2H"/>
@@ -101,6 +172,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="tableView" destination="xkm-Ed-dvS" id="IsJ-wo-OgS"/>
                         <outlet property="valueLabel" destination="jt3-kx-zDK" id="Y2q-XA-6QV"/>
                         <outlet property="walletTextField" destination="2nN-9j-6wO" id="qdO-dQ-xaS"/>
                     </connections>
@@ -396,6 +468,9 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="5xK-KU-IpZ" id="cDg-JA-bKV"/>
                             <outlet property="delegate" destination="5xK-KU-IpZ" id="XFJ-gW-Qih"/>

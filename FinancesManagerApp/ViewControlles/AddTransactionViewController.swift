@@ -20,7 +20,7 @@ class AddTransactionViewController: UIViewController {
     @IBOutlet weak var categoryButton: UIButton!
     
     //MARK: - Private Properties
-    private var selectedType = "income"
+    private var selectedType = "+"
     private var wallets: Results<Wallet>!
     private var selectedWallet: Wallet?
     private var selectedDate = ""
@@ -63,10 +63,10 @@ class AddTransactionViewController: UIViewController {
     @IBAction func segmentedControllPressed() {
         switch typeSegmentedControl.selectedSegmentIndex {
         case 0:
-            selectedType = "income"
+            selectedType = "+"
             changeSegmentedTextColor(selected: typeSegmentedControl)
         default:
-            selectedType = "expence"
+            selectedType = "-"
             changeSegmentedTextColor(selected: typeSegmentedControl)
         }
     }
@@ -101,7 +101,7 @@ extension AddTransactionViewController {
         guard let newTotal = total else { return }
         
         DispatchQueue.main.async {
-            StorageManager.shared.addTransaction(wallet: wallet, transaction: transaction)
+            StorageManager.shared.addTransaction(total: newTotal, wallet: wallet, transaction: transaction)
             StorageManager.shared.updateTotal(total: newTotal)
         }
     }
@@ -115,6 +115,7 @@ extension AddTransactionViewController {
         transaction.type = selectedType
         transaction.note = noteTextView.text
         transaction.category = selectedCategory
+        transaction.wallet = selectedWallet
         
         if selectedDate == "" {
             selectedDay = "today"

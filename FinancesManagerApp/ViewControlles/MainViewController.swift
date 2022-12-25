@@ -13,28 +13,40 @@ class MainViewController: UIViewController {
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var walletTextField: UITextField!
     
+    @IBOutlet weak var tableView: UITableView!
+    
     //MARK: - Private properties
     private let pickerView = UIPickerView()
     private var wallets: [Wallet] = []
     private var total: Total?
+    private var walletTransactions: List<Transaction>!
+    private var totalTransactions: Results<Transaction>!
+    private var isSelected = true
     
     //MARK: - LifeCycles
     override func viewWillAppear(_ animated: Bool) {
-       updateWallets()
-       updateView()
+        updateWallets()
+        showTotal()
+        isSelected = true
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         DataManager.shared.createDefaultObjects()
         createPickerView()
+        totalTransactions = StorageManager.shared.realm.objects(Transaction.self)
         
         DispatchQueue.main.async {
             self.total = StorageManager.shared.realm.object(ofType: Total.self, forPrimaryKey: 0)
             self.updateWallets()
-            self.updateView()
+            self.showTotal()
         }
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
+    
     
     //MARK: - IBActions
     @IBAction func addWalletPressed() {
@@ -46,7 +58,7 @@ class MainViewController: UIViewController {
 }
 
 
-    //MARK: - Extensions
+//MARK: - Extensions
 extension MainViewController {
     private func showAlert(title: String) {
         let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
@@ -72,27 +84,53 @@ extension MainViewController {
             self.updateWallets()
         }
     }
+    
+    private func updateWallets() {
+        let realmWallets = StorageManager.shared.realm.objects(Wallet.self)
+        wallets = []
+        
+        for wallet in realmWallets {
+            wallets.append(wallet)
+        }
+    }
+    
+    private func showTotal() {
+        valueLabel.text = "\(Int(total?.value ?? 0))"
+        walletTextField.text = total?.name
+    }
 }
 
-    //MARK: - Work with PickerView
+//MARK: - Work with PickerView
 extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     private func createPickerView() {
         
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(cancelPressed))
-        cancelButton.tintColor = .red
+        cancelButton.tintColor = #colorLiteral(red: 0.998930037, green: 0.2212841809, blue: 0.1201847121, alpha: 1)
         
-        let toolbarTitle = createToolbarText(title: "Choose Wallet")
+        let showTotal = UIBarButtonItem(title: "Show Total", style: .plain, target: nil, action: #selector(showTotalPressed))
+        showTotal.tintColor = #colorLiteral(red: 0.1380040646, green: 0.768296361, blue: 0, alpha: 1)
+        
+        let selectButton = UIBarButtonItem(title: "Select", style: .done, target: nil, action: #selector(selectWalletPressed))
+        selectButton.tintColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        toolbar.setItems([toolbarTitle, flexible, cancelButton], animated: true)
+        toolbar.setItems([cancelButton, flexible, showTotal, selectButton], animated: true)
         
         pickerView.delegate = self
         pickerView.dataSource = self
+        
         walletTextField.inputView = pickerView
         walletTextField.inputAccessoryView = toolbar
+
         pickerView.backgroundColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
+    }
+    
+    @objc private func selectWalletPressed() {
+        pickerView.selectRow(0, inComponent: 0, animated: true)
+        pickerView(pickerView, didSelectRow: 0, inComponent: 0)
     }
     
     private func createToolbarText(title: String) -> UIBarButtonItem {
@@ -103,30 +141,18 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         return toolbarTitle
     }
     
+    @objc private func showTotalPressed() {
+        isSelected = true
+        showTotal()
+        
+        tableView.reloadData()
+        self.view.endEditing(true)
+    }
+    
     @objc private func cancelPressed() {
         self.view.endEditing(true)
     }
     
-    
-    private func updateWallets() {
-        let walletfromTotal = Wallet()
-        walletfromTotal.name = total?.name ?? "error"
-        walletfromTotal.money = total?.value ?? 0
-        
-        let realmWallets = StorageManager.shared.realm.objects(Wallet.self)
-        wallets = []
-        
-        for wallet in realmWallets {
-            wallets.append(wallet)
-        }
-        wallets.insert(walletfromTotal, at: 0)
-    }
-    
-    func updateView() {
-        let total = wallets.first
-        valueLabel.text = "\(Int(total?.money ?? 0))"
-        walletTextField.text = total?.name
-    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
@@ -145,6 +171,49 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let wallet = wallets[row]
         walletTextField.text = wallet.name
         valueLabel.text = "\(Int(wallet.money))"
+        
         walletTextField.resignFirstResponder()
+        
+        walletTransactions = wallet.transactions
+        isSelected = false
+        tableView.reloadData()
     }
 }
+
+//MARK: - Work with Table view
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return isSelected ? totalTransactions.count : walletTransactions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TransactionTableViewCell
+        let transaction: Transaction
+        
+        if isSelected {
+            transaction = totalTransactions.reversed()[indexPath.row]
+        } else {
+            transaction = walletTransactions.reversed()[indexPath.row]
+        }
+        
+        cell.categoryLabel.text = (transaction.category?.name ?? "error")
+        cell.walletLabel.text = (transaction.wallet?.name ?? "error")
+        
+        cell.valueLabel.text = transaction.type + String(transaction.value)
+
+        
+        switch transaction.type {
+        case "+":
+            cell.valueLabel.textColor = #colorLiteral(red: 0.1380040646, green: 0.768296361, blue: 0, alpha: 1)
+        case "-":
+            cell.valueLabel.textColor = #colorLiteral(red: 0.998930037, green: 0.2212841809, blue: 0.1201847121, alpha: 1)
+        default:
+            break
+        }
+        
+        return cell
+    }
+}
+
+

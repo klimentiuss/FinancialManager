@@ -13,6 +13,7 @@ class Total: Object {
     @Persisted var value: Double = 0
     
     @Persisted var wallets: List<Wallet>
+    @Persisted var transactions: List<Transaction>
 }
 
 class Wallet: Object {
@@ -28,6 +29,7 @@ class Transaction: Object {
     @Persisted var date = ""
     @Persisted var note = ""
     @Persisted var category: Category?
+    @Persisted var wallet: Wallet?
 }
 
 class Category: Object {

@@ -37,14 +37,15 @@ class StorageManager {
         }
     }
 
-    func addTransaction(wallet: Wallet, transaction: Transaction) {
+    func addTransaction(total: Total, wallet: Wallet, transaction: Transaction) {
         write {
-            if transaction.type == "income" {
+            if transaction.type == "+" {
                 wallet.money += transaction.value
             } else {
                 wallet.money -= transaction.value
             }
             wallet.transactions.append(transaction)
+            total.transactions.append(transaction)
         }
     }
   
