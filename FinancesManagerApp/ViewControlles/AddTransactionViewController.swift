@@ -16,8 +16,9 @@ class AddTransactionViewController: UIViewController {
     @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var yesterdayButton: UIButton!
     @IBOutlet weak var noteTextView: UITextView!
-    @IBOutlet weak var walletTestField: UITextField!
+    @IBOutlet weak var walletTextField: UITextField!
     @IBOutlet weak var categoryButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
     
     //MARK: - Private Properties
     private var selectedType = "+"
@@ -32,8 +33,13 @@ class AddTransactionViewController: UIViewController {
     
     
     //MARK: - LifeCycles
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: true)
         wallets = StorageManager.shared.realm.objects(Wallet.self)
         createWalletPicker()
         createDatePicker()
@@ -45,6 +51,7 @@ class AddTransactionViewController: UIViewController {
         valueTextField.inputAccessoryView = createToolbar(action: "cancel", title: "Enter value")
         noteTextView.inputAccessoryView = createToolbar(action: "done", title: "Enter note")
         valueTextField.delegate = self
+       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -60,6 +67,14 @@ class AddTransactionViewController: UIViewController {
     }
     
     //MARK: - IBActions
+    @IBAction func uploadPressed(_ sender: Any) {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
     @IBAction func segmentedControllPressed() {
         switch typeSegmentedControl.selectedSegmentIndex {
         case 0:
@@ -84,13 +99,35 @@ class AddTransactionViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed() {
-        saveTransaction()
+        
+        if valueTextField.text == "" {
+            showAlert(title: "Oops, you forgot to set the value of transaction.")
+        }
+        if walletTextField.backgroundColor != #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1) ||  categoryButton.backgroundColor != #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1) {
+            showAlert(title: "Oops, you forgot to set wallet or category.")
+        } else {
+            saveTransaction()
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func cancelButtonPressed() {
     }
 }
 
+extension AddTransactionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            imageView.image = image
+            
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
 
 extension AddTransactionViewController {
     //MARK: - Private Methods
@@ -110,12 +147,20 @@ extension AddTransactionViewController {
         
         let transaction = Transaction()
         let value = Double(valueTextField.text ?? "0") ?? 0
+        let transactionImage = imageView.image
+        var transactionImageData = transactionImage?.jpegData(compressionQuality: 1.0)
+        if imageView.image == UIImage(systemName: "photo.artframe") {
+            transactionImageData = nil
+        }
         
         transaction.value = value
         transaction.type = selectedType
         transaction.note = noteTextView.text
         transaction.category = selectedCategory
         transaction.wallet = selectedWallet
+        transaction.image = transactionImageData
+       
+        
         
         if selectedDate == "" {
             selectedDay = "today"
@@ -147,8 +192,8 @@ extension AddTransactionViewController {
         pickerView.dataSource = self
         pickerView.backgroundColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
         
-        walletTestField.inputView = pickerView
-        walletTestField.inputAccessoryView = createToolbar(action: "cancel", title: "Choose Wallet")
+        walletTextField.inputView = pickerView
+        walletTextField.inputAccessoryView = createToolbar(action: "cancel", title: "Choose Wallet")
     }
     
     private func createDatePicker() {
@@ -291,10 +336,10 @@ extension AddTransactionViewController: UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let wallet = wallets[row]
         selectedWallet = wallet
-        walletTestField.text = selectedWallet?.name
-        walletTestField.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        walletTestField.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-        walletTestField.resignFirstResponder()
+        walletTextField.text = selectedWallet?.name
+        walletTextField.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        walletTextField.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        walletTextField.resignFirstResponder()
     }
 }
 
@@ -306,10 +351,20 @@ extension Date {
 
 
 //MARK: - Work with TextField
-
 extension AddTransactionViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+}
+//MARK: - Work with Alert
+extension AddTransactionViewController {
+    private func showAlert(title: String) {
+        let alert = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        alert.overrideUserInterfaceStyle = UIUserInterfaceStyle.dark
+        let okAction = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(okAction)
+        
+        present(alert, animated: true)
     }
 }

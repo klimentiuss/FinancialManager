@@ -13,7 +13,10 @@ extension UIAlertController {
             guard let name = self.textFields?.first?.text else { return}
             guard !name.isEmpty else { return }
             
-            guard let textValue = self.textFields?.last?.text else { return }
+            guard var textValue = self.textFields?.last?.text else { return }
+            if textValue == "" {
+                textValue = "0"
+            }
             guard let value = Double(textValue) else { return }
             
             completion(name, value)

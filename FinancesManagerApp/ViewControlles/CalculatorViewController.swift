@@ -41,8 +41,13 @@ class CalculatorViewController: UIViewController {
     }
     
     //MARK: - LifeCycles
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationItem.rightBarButtonItem?.isEnabled = false
     }
     

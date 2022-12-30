@@ -30,6 +30,7 @@ class Transaction: Object {
     @Persisted var note = ""
     @Persisted var category: Category?
     @Persisted var wallet: Wallet?
+    @Persisted var image: Data? 
 }
 
 class Category: Object {

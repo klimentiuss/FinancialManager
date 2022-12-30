@@ -16,9 +16,14 @@ class CategoriesTableViewController: UITableViewController {
     private var categories: Results<Category>!
     var delegate: CategoriesVCDelegate?
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        
         categories = StorageManager.shared.realm.objects(Category.self)
     }
 

@@ -7,11 +7,16 @@
 
 import RealmSwift
 
+protocol MainViewControllerDelegate {
+    func getTransaction() -> Transaction
+}
+
 class MainViewController: UIViewController {
     
     //MARK: - IBOutlets
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var walletTextField: UITextField!
+    @IBOutlet weak var addButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,14 +30,20 @@ class MainViewController: UIViewController {
     
     //MARK: - LifeCycles
     override func viewWillAppear(_ animated: Bool) {
-        updateWallets()
-        showTotal()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
         isSelected = true
-        tableView.reloadData()
+        
+        DispatchQueue.main.async {
+            self.updateWallets()
+            self.showTotal()
+            self.tableView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: true)
         DataManager.shared.createDefaultObjects()
         createPickerView()
         totalTransactions = StorageManager.shared.realm.objects(Transaction.self)
@@ -43,10 +54,19 @@ class MainViewController: UIViewController {
             self.showTotal()
         }
         
+        addButton.layer.borderWidth = 2
+        addButton.layer.borderColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "transactionVC" {
+            guard let transactionVC = segue.destination as? TransactionViewController else { return }
+            transactionVC.delegate = self
+        }
+    }
     
     //MARK: - IBActions
     @IBAction func addWalletPressed() {
@@ -124,7 +144,7 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         
         walletTextField.inputView = pickerView
         walletTextField.inputAccessoryView = toolbar
-
+        
         pickerView.backgroundColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
     }
     
@@ -183,6 +203,7 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 //MARK: - Work with Table view
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isSelected ? totalTransactions.count : walletTransactions.count
     }
@@ -201,7 +222,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         cell.walletLabel.text = (transaction.wallet?.name ?? "error")
         
         cell.valueLabel.text = transaction.type + String(transaction.value)
-
+        
         
         switch transaction.type {
         case "+":
@@ -214,6 +235,21 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    
 }
 
+extension MainViewController: MainViewControllerDelegate {
+    func getTransaction() -> Transaction {
+            let indexPathForSelectedRows = tableView.indexPathsForSelectedRows
+            let indexPath = indexPathForSelectedRows?.last
+            let transaction: Transaction
+            if isSelected {
+                transaction = totalTransactions.reversed()[indexPath?.row ?? 0]
+            } else {
+                transaction = walletTransactions.reversed()[indexPath?.row ?? 0]
 
+            }
+            return transaction
+        }
+}

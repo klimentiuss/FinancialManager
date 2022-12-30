@@ -21,6 +21,7 @@
 		DCBA9DA9293E4364009E2645 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA9DA8293E4364009E2645 /* StorageManager.swift */; };
 		DCC178D22958B23B00F59CF6 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC178D12958B23B00F59CF6 /* TransactionTableViewCell.swift */; };
 		DCE18404295335BC00FF6FA7 /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */; };
+		DCF89F28295F279E00E66320 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF89F27295F279E00E66320 /* TransactionViewController.swift */; };
 		DCFFB87029572F900072B605 /* CategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFFB86F29572F900072B605 /* CategoriesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		DCBA9DA8293E4364009E2645 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		DCC178D12958B23B00F59CF6 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		DCE18403295335BC00FF6FA7 /* CalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewController.swift; sourceTree = "<group>"; };
+		DCF89F27295F279E00E66320 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		DCFFB86F29572F900072B605 /* CategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +126,7 @@
 				DCFFB86F29572F900072B605 /* CategoriesTableViewController.swift */,
 				DCB64FB9295735DD00428D25 /* Extention + AlertController.swift */,
 				DCC178D12958B23B00F59CF6 /* TransactionTableViewCell.swift */,
+				DCF89F27295F279E00E66320 /* TransactionViewController.swift */,
 			);
 			path = ViewControlles;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				DCBA9DA9293E4364009E2645 /* StorageManager.swift in Sources */,
 				DC348FD0293E3B1200636F8C /* AppDelegate.swift in Sources */,
 				DCE18404295335BC00FF6FA7 /* CalculatorViewController.swift in Sources */,
+				DCF89F28295F279E00E66320 /* TransactionViewController.swift in Sources */,
 				DCFFB87029572F900072B605 /* CategoriesTableViewController.swift in Sources */,
 				DCB64FBA295735DD00428D25 /* Extention + AlertController.swift in Sources */,
 				DC348FD2293E3B1200636F8C /* SceneDelegate.swift in Sources */,
@@ -439,11 +443,13 @@
 				DEVELOPMENT_TEAM = 5KN7899368;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinancesManagerApp/SupportFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Coinage;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -451,9 +457,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = klimenko.FinancesManagerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -468,11 +477,13 @@
 				DEVELOPMENT_TEAM = 5KN7899368;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinancesManagerApp/SupportFiles/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Coinage;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,9 +491,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = klimenko.FinancesManagerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

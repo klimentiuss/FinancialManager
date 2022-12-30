@@ -34,7 +34,7 @@ class DataManager {
     }
     
     func defaultCategories() -> [Category] {
-        let categoryNames = ["Food", "Travel", "Medicine"]
+        let categoryNames = ["0️⃣ Without category", "🍗 Food", "🌆 Travel", "💊 Medicine", "🏦 Bank", "💸 Business", "🏡 Home", "🏛️ State", "👨‍👧‍👦 Children", "🐈 Pets", "✨ Beauty", "📚 Education", "👕 Сlothes", "🎁 Gifts", "🎡 Entertainment", "🖥️ Technic", "🚃 Transport"]
         var categories: [Category] = []
         
         for name in categoryNames {
